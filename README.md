@@ -27,7 +27,7 @@ One could argue that Clarity, Approachability, and Developer Experience could be
 
 Provide a reliable platform for dapp development that's easy to use.
 
-# Quest Ch2.1
+## Quest Ch2.1
 
 Account 0x03
 ```
@@ -46,5 +46,52 @@ import JacobTucker from 0x03
 
 pub fun main(): String {
   return JacobTucker.is
+}
+```
+
+## Quest Ch2.2
+
+1. changeGreeting mutates a value so would not be appropriate in a script, which is read-only
+2. AuthAccount references an account address on whose behalf the transaction will take place
+3. the body of `prepare` is for non-mutating set-up work while `execute` is for isolating blockchain state changes in a separate function
+4. code below
+
+0x01 Account
+```
+pub contract HelloWorld {
+
+    pub var myNumber: Int
+
+    init() {
+        self.myNumber = 0
+    }
+
+    pub fun updateNumber(newNumber: Int) {
+        self.myNumber = newNumber
+    }
+
+}
+```
+
+Script
+```
+import HelloWorld from 0x01
+
+pub fun main(): Int {
+  return HelloWorld.myNumber
+}
+```
+
+Transaction
+```
+import HelloWorld from 0x01
+
+transaction(myNewNumber: Int) {
+
+  prepare(signer: AuthAccount) {}
+
+  execute {
+    HelloWorld.updateNumber(newNumber: myNewNumber)
+  }
 }
 ```
