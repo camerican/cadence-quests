@@ -26,3 +26,25 @@ One could argue that Clarity, Approachability, and Developer Experience could be
 2. Why are the Pillars useful?
 
 Provide a reliable platform for dapp development that's easy to use.
+
+# Quest Ch2.1
+
+Account 0x03
+```
+pub contract JacobTucker {
+    pub let is: String
+
+    init() {
+        self.is = "the best"
+    }
+}
+```
+
+Script Template
+```
+import JacobTucker from 0x03
+
+pub fun main(): String {
+  return JacobTucker.is
+}
+```
