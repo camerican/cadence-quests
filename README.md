@@ -95,3 +95,29 @@ transaction(myNewNumber: Int) {
   }
 }
 ```
+
+## Ch2.3
+Initialize an array of your favorite 3 ppl and log them
+```
+pub fun main(): Void {
+  let array: [String] = ["Me", "You", "Roham"]
+  log(array)
+}
+```
+Initialize a dictionary of UInt64:String w/ Social media Ratings
+```
+pub fun main(): Void {
+  let myFavSocials: {UInt64: String} = {1: "YouTube", 2: "Instagram", 3: "Reddit", 4: "Twitter", 5: "LinkedIn", 6: "Facebook" }
+  log(myFavSocials)
+}
+```
+
+The force unwrap operator `!` will panic if the variable it follows is `nil`
+
+The following code results in an error because it's syntactically possible for the dictionary `thing` to not have a value for address `0x03` which means we either need to add force unwrap `!` to the return or (preferably) change the function return type to `String?` to indicate a `nil` return value is possible:
+```
+pub fun main(): String {
+  let thing: {Address: String} = {0x01: "One", 0x02: "Two", 0x03: "Three"}
+  return thing[0x03]
+}
+```
