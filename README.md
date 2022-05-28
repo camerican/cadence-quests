@@ -121,3 +121,66 @@ pub fun main(): String {
   return thing[0x03]
 }
 ```
+
+## Ch 2.4
+1) Create a struct within a contract:
+```
+pub contract Gallery {
+
+  pub struct Image {
+    pub let filename: String
+    pub let width: UInt64
+    pub let height: UInt64
+
+    init(_filename: String, _width: UInt64, _height: UInt64) {
+      self.filename = _filename
+      self.width = _width
+      self.height = _height
+    }
+  }
+}
+```
+
+2) Create a dictionary or array that contains the Struct:
+
+```
+  pub var images: [Image]
+  
+  init () {
+    self.images = []
+  }
+
+```
+
+3) Create a function to add to that array/dictionary:
+
+```
+  pub fun addImage(filename: String, width: UInt64, height: UInt64) {
+    self.images.append( Image(_filename: filename, _width: width, _height: height) )
+  }
+```
+
+4) Add a transaction to call that function in step 3:
+
+```
+import Gallery from 0x02
+
+transaction(filename: String, width: UInt64, height: UInt64) {
+
+    prepare(signer: AuthAccount) {}
+
+    execute {
+        Gallery.addImage(filename: filename, width: width, height: height)
+        log("We're done.")
+    }
+}
+```
+
+5) Add a script to read the Struct you defined
+```
+import Gallery from 0x02
+
+pub fun main(account: Address): Gallery.Image {
+    return Gallery.images[0]! // return first image from gallery
+}
+```
