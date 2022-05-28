@@ -27,7 +27,7 @@ One could argue that Clarity, Approachability, and Developer Experience could be
 
 Provide a reliable platform for dapp development that's easy to use.
 
-## Quest Ch2.1
+## Quest 2.1
 
 Account 0x03
 ```
@@ -49,7 +49,7 @@ pub fun main(): String {
 }
 ```
 
-## Quest Ch2.2
+## Quest 2.2
 
 1. changeGreeting mutates a value so would not be appropriate in a script, which is read-only
 2. AuthAccount references an account address on whose behalf the transaction will take place
@@ -96,7 +96,7 @@ transaction(myNewNumber: Int) {
 }
 ```
 
-## Ch2.3
+## Quest 2.3
 Initialize an array of your favorite 3 ppl and log them
 ```
 pub fun main(): Void {
@@ -122,7 +122,7 @@ pub fun main(): String {
 }
 ```
 
-## Ch 2.4
+## Quest 2.4
 1) Create a struct within a contract:
 ```
 pub contract Gallery {
@@ -182,5 +182,32 @@ import Gallery from 0x02
 
 pub fun main(account: Address): Gallery.Image {
     return Gallery.images[0]! // return first image from gallery
+}
+```
+
+## Quest 3.1
+
+1) Resources are different from structs in that they can only exist inside contracts, need to be explicitly created and destroyed, and cannot be copied.
+2) A `resource` would be appropriate to use when we're looking to represent ownership over something to ensure we are explicit about custody
+3) We can use the `create` keyword for a resource
+4) A resource must be created in a contract, so cannot be created within a script or transaction
+5) `pub resource Jacob {}` is declaring a type of `@Jacob` for the resource
+6) Correcting the following code:
+
+```
+pub contract Test {
+
+    // Hint: There's nothing wrong here ;)
+    pub resource Jacob {
+        pub let rocks: Bool
+        init() {
+            self.rocks = true
+        }
+    }
+
+    pub fun createJacob(): @Jacob { // must use @ as prefix to resource return type
+        let myJacob <- create Jacob() // use create keyword and <- symbol to assign to myJacob
+        return <- myJacob // use <- symbol to return resource
+    }
 }
 ```
